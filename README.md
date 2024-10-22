@@ -1,4 +1,4 @@
-# Customer and Product Management System
+# Simple Java VPN App
 
 ### Description
 
