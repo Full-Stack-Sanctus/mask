@@ -15,6 +15,7 @@ def maskVersionCode = localProperties.getProperty('mask.versionCode', '1')
 def maskVersionName = localProperties.getProperty('mask.versionName', '1.0')
 
 android {
+    namespace "com.example.mask"
     compileSdkVersion 34
 
     defaultConfig {
