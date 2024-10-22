@@ -4,6 +4,9 @@ import android.net.VpnService;
 import android.os.ParcelFileDescriptor;
 import java.io.IOException;
 
+import android.content.Intent;
+
+
 public class MaskService extends VpnService {
 
     private ParcelFileDescriptor vpnInterface = null;
