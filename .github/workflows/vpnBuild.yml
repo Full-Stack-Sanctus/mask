@@ -34,15 +34,17 @@ jobs:
         echo "sdk.dir=$ANDROID_HOME" >> local.properties
         cat local.properties  # Output the file contents for debugging
     
+    - name: Decode keystore
+      run: |
+        echo "${{ secrets.KEYSTORE }}" | base64 --decode > release-key.jks
+        chmod 600 release-key.jks  # Ensure the keystore file has the correct permissions
+   
+    - name: List files
+      run: ls -al
+    
     - name: Grant execute permission for gradlew
       run: chmod +x ./gradlew
       
-    - name: Decode keystore
-      run: echo "${{ secrets.KEYSTORE_BASE64}}" | base64 --decode > /release-key.jks
-    
-    - name: List files
-      run: ls -al
-  
     - name: Build with Gradle
       env:
         KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }} # Add your keystore password secret
