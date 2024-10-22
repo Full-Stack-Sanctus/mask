@@ -29,7 +29,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file(System.getenv("KEYSTORE")) // Use environment variable
+            storeFile file("release-key.jks") // Use environment variable
             storePassword System.getenv("KEYSTORE_PASSWORD")
             keyAlias System.getenv("KEY_ALIAS")
             keyPassword System.getenv("KEY_PASSWORD")
