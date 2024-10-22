@@ -30,7 +30,7 @@ jobs:
     - name: Append sdk.dir to local.properties
       run: |
         echo "sdk.dir=$ANDROID_HOME" >> local.properties
-        cat local.properties  
+        cat local.properties
         
     - name: Build with Gradle
       run: ./gradlew build --stacktrace
