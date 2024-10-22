@@ -15,20 +15,22 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Set up JDK 11
+    - name: Set up JDK 21
       uses: actions/setup-java@v2
       with:
         distribution: 'zulu'
-        java-version: '11'
+        java-version: '21'
 
     - name: Install Android SDK
       uses: android-actions/setup-android@v2
       with:
-        api-level: 31
-        build-tools: 31.0.0
+        api-level: 34
+        build-tools: 34.0.0
 
     - name: Append sdk.dir to local.properties
       run: |
+        sed -i '/^sdk.dir=/d' local.properties  # Remove any existing sdk.dir line
+        echo "" >> local.properties  # Add a new line before appending sdk.dir
         echo "sdk.dir=$ANDROID_HOME" >> local.properties
         cat local.properties  # Output the file contents for debugging
     
