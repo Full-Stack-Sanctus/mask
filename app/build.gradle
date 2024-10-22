@@ -29,7 +29,8 @@ android {
 
     signingConfigs {
         release {
-            // refrenced keystore in YAML file 
+            storeFile file("my-release-key.jks") // Update the path to match where the file is placed
+       
             storePassword System.getenv("KEYSTORE_PASSWORD")
             keyAlias System.getenv("KEY_ALIAS")
             keyPassword System.getenv("KEY_PASSWORD")
