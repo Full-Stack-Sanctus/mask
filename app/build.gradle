@@ -29,7 +29,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("my-release-key.jks") // Update the path to match where the file is placed
+            storeFile file("release-key.jks") // Update the path to match where the file is placed
        
             storePassword System.getenv("KEYSTORE_PASSWORD")
             keyAlias System.getenv("KEY_ALIAS")
