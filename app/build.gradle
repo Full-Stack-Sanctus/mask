@@ -29,19 +29,10 @@ android {
 
     signingConfigs {
         release {
-            def keystorePropertiesFile = rootProject.file("config/keystore.properties")
-            def keystoreProperties = new Properties()
-            if (keystorePropertiesFile.exists()) {
-                keystorePropertiesFile.withReader { reader ->
-                    keystoreProperties.load(reader)
-                }
-                keyAlias keystoreProperties['keyAlias']
-                keyPassword keystoreProperties['keyPassword']
-                storeFile file(keystoreProperties['storeFile'])
-                storePassword keystoreProperties['storePassword']
-            } else {
-                throw new GradleException("keystore.properties file not found. Ensure the file is located in the project's config directory.")
-            }
+            storeFile file(System.getenv("KEYSTORE")) // Use environment variable
+            storePassword System.getenv("KEYSTORE_PASSWORD")
+            keyAlias System.getenv("KEY_ALIAS")
+            keyPassword System.getenv("KEY_PASSWORD")
         }
     }
 
