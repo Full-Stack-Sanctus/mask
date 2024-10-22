@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 // Import MaskService from the correct package
 import com.example.mask.MaskService;
 
+import config.IpConfig
 
 public class MainActivity extends AppCompatActivity {
 
