@@ -1,10 +1,15 @@
 package com.example.mask;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.snackbar.Snackbar; // For displaying Snackbar
 
 // Import MaskService from the correct package
 import service.MaskService;
@@ -15,6 +20,17 @@ public class MainActivity extends AppCompatActivity {
 
     private Button startVpnButton;
     private Button stopVpnButton;
+
+    // Define a BroadcastReceiver to listen for error broadcasts
+    private final BroadcastReceiver vpnErrorReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String errorMessage = intent.getStringExtra("error_message");
+            if (errorMessage != null) {
+                showSnackbar(errorMessage);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +53,17 @@ public class MainActivity extends AppCompatActivity {
                 stopVpnService();
             }
         });
+
+        // Register the BroadcastReceiver to listen for VPN errors
+        IntentFilter filter = new IntentFilter("com.example.mask.VPN_ERROR");
+        registerReceiver(vpnErrorReceiver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Unregister the receiver to avoid memory leaks
+        unregisterReceiver(vpnErrorReceiver);
     }
 
     private void startVpnService() {
@@ -49,5 +76,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MaskService.class);
         intent.setAction("STOP_VPN"); // Specify action to stop VPN
         stopService(intent);
+    }
+
+    // Method to show the Snackbar
+    private void showSnackbar(String message) {
+        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
     }
 }

@@ -10,7 +10,10 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 
-import android.content.Intent; // Import Intent
+import android.content.Intent; // For creating an Intent to broadcast
+import android.content.Context; // If needed for certain context operations
+
+
 
 
 import config.IpConfig; // Adjust the import path based on your project structure
@@ -93,4 +96,15 @@ public class MaskService extends VpnService {
         
         Log.i("MaskService", "VPN stopped");
     }
+    
+    
+    
+    // Method to broadcast error messages
+    private void broadcastError(String errorMessage) {
+        Intent errorIntent = new Intent("com.example.mask.VPN_ERROR");
+        errorIntent.putExtra("error_message", errorMessage);
+        sendBroadcast(errorIntent);
+    }
+    
+    
 }
