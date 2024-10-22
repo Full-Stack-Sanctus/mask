@@ -38,21 +38,23 @@ public class MaskService extends VpnService {
                .addAddress("10.0.0.2", 24) // Example IP address
                .addRoute("0.0.0.0", 0); // Redirect all traffic through the VPN
 
-        try {
-            vpnInterface = builder.establish();
-        } catch (IOException e) {
-            e.printStackTrace();
+        vpnInterface = builder.establish();
+
+        if (vpnInterface == null) {
+             // Handle the case where the VPN interface could not be established
+             Log.e("MaskService", "Failed to establish VPN interface");
         }
+
     }
 
     private void stopVpn() {
         if (vpnInterface != null) {
-            try {
-                vpnInterface.close();
-                vpnInterface = null;
-            } catch (IOException e) {
-                e.printStackTrace();
+            
+             vpnInterface.close();
+             vpnInterface = null;
+        } 
+        else {
+            e.printStackTrace();
             }
         }
     }
-}
