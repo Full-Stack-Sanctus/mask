@@ -31,7 +31,11 @@ jobs:
       run: |
         echo "sdk.dir=$ANDROID_HOME" >> local.properties
         cat local.properties  # Output the file contents for debugging
-
+    
+    - name: Grant execute permission for gradlew
+      run: chmod +x ./gradlew
+      
+      
     - name: Build with Gradle
       run: ./gradlew build --stacktrace
 
