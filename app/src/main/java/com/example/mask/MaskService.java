@@ -8,7 +8,10 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 
-import config.AppConfig; // Adjust the import path based on your project structure
+import android.content.Intent; // Import Intent
+
+
+import config.IpConfig; // Adjust the import path based on your project structure
 
 
 public class MaskService extends VpnService {
@@ -51,7 +54,7 @@ public class MaskService extends VpnService {
             vpnThread = new Thread(() -> {
                 try {
                     DatagramChannel tunnel = DatagramChannel.open();
-                    tunnel.connect(new InetSocketAddress(AppConfig.SERVER_IP, AppConfig.SERVER_PORT)); // Replace with actual server IP and port
+                    tunnel.connect(new InetSocketAddress(IpConfig.SERVER_IP, IpConfig.SERVER_PORT)); // Replace with actual server IP and port
                     
                     FileInputStream in = new FileInputStream(vpnInterface.getFileDescriptor());
                     ByteBuffer packet = ByteBuffer.allocate(32767);
