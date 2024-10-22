@@ -6,6 +6,8 @@ import java.io.IOException;
 
 import android.content.Intent;
 
+import android.util.Log;
+
 
 public class MaskService extends VpnService {
 
@@ -54,7 +56,7 @@ public class MaskService extends VpnService {
              vpnInterface = null;
         } 
         else {
-            e.printStackTrace();
+            Log.e("MaskService", "No established VPN interface found");
             }
         }
     }
