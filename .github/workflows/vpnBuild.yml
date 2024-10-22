@@ -47,6 +47,7 @@ jobs:
       
     - name: Build with Gradle
       env:
+        KEYSTORE_FILE: ${{ github.workspace }}/release-key.jks
         KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }} # Add your keystore password secret
         KEY_ALIAS: ${{ secrets.KEY_ALIAS }}               # Add your key alias secret
         KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}         # Add your key password secret
