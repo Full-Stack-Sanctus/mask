@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mask.MaskService;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button startVpnButton;
@@ -36,11 +38,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void startVpnService() {
         Intent intent = new Intent(this, MaskService.class);
+        intent.setAction("START_VPN"); // Specify action to start VPN
         startService(intent);
     }
 
     private void stopVpnService() {
         Intent intent = new Intent(this, MaskService.class);
+        intent.setAction("STOP_VPN"); // Specify action to stop VPN
         stopService(intent);
     }
 }

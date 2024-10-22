@@ -1,24 +1,20 @@
-import android.app.Service;
-import android.content.Intent;
 import android.net.VpnService;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 
+import config.AppConfig; // Adjust the import path based on your project structure
+
+
 public class MaskService extends VpnService {
     private ParcelFileDescriptor vpnInterface = null;
     private Thread vpnThread = null;
-    
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        // Setup code can go here
-    }
-    
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         String action = intent.getAction();
@@ -39,12 +35,11 @@ public class MaskService extends VpnService {
     public void startVpn() {
         Builder builder = new Builder();
 
-        // Set up the VPN connection parameters
         builder.setSession("USA VPN")
-               .addAddress("10.0.0.2", 24)  // A virtual IP address
-               .addRoute("0.0.0.0", 0)      // Route all traffic
-               .addDnsServer("8.8.8.8")     // DNS server, you can choose a USA DNS
-               .setMtu(1500);               // Set MTU size
+               .addAddress("10.0.0.2", 24)
+               .addRoute("0.0.0.0", 0)
+               .addDnsServer("8.8.8.8")
+               .setMtu(1500);
         
         try {
             vpnInterface = builder.establish();
@@ -52,23 +47,19 @@ public class MaskService extends VpnService {
             Log.e("MaskService", "Failed to establish VPN interface", e);
         }
         
-        // Establish the VPN tunnel to the USA-based server
         if (vpnInterface != null) {
             vpnThread = new Thread(() -> {
                 try {
-                    // Create a UDP tunnel (or TCP for proxy-based routing)
                     DatagramChannel tunnel = DatagramChannel.open();
-                    tunnel.connect(new InetSocketAddress("YOUR_USA_SERVER_IP", YOUR_SERVER_PORT));
-
-                    // Forward traffic from/to the VPN interface to/from the USA server
+                    tunnel.connect(new InetSocketAddress(AppConfig.SERVER_IP, AppConfig.SERVER_PORT)); // Replace with actual server IP and port
+                    
+                    FileInputStream in = new FileInputStream(vpnInterface.getFileDescriptor());
                     ByteBuffer packet = ByteBuffer.allocate(32767);
                     while (!Thread.currentThread().isInterrupted()) {
-                        // Example: Reading from the virtual interface
-                        int length = vpnInterface.getFileDescriptor().read(packet);
+                        int length = in.read(packet.array());  // Reading from VPN interface
                         if (length > 0) {
-                            // Modify or forward packet to the USA server (this is simplified)
                             packet.flip();
-                            tunnel.write(packet);
+                            tunnel.write(packet);  // Forwarding packet to USA server
                             packet.clear();
                         }
                     }
@@ -82,7 +73,7 @@ public class MaskService extends VpnService {
 
     public void stopVpn() {
         if (vpnThread != null && vpnThread.isAlive()) {
-            vpnThread.interrupt(); // Stop the thread handling VPN traffic
+            vpnThread.interrupt();
             vpnThread = null;
         }
         
