@@ -22,8 +22,8 @@ android {
         applicationId "com.natinc.nat.naijatrans"
         minSdkVersion 21 // Update according to your requirements
         targetSdkVersion 34
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        versionCode maskVersionCode.toInteger()
+        versionName maskVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
