@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar; // For displaying Snackbar
 
+import androidx.core.content.ContextCompat; // Import ContextCompat
+
 // Import MaskService from the correct package
 import service.MaskService;
 
