@@ -44,13 +44,6 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
-// Don't forget to unregister in onDestroy
-@Override
-protected void onDestroy() {
-    super.onDestroy();
-    unregisterReceiver(vpnErrorReceiver);
-    unregisterReceiver(vpnStatusReceiver); // Unregister status receiver
-}
 
 
     @Override
@@ -90,6 +83,7 @@ protected void onDestroy() {
         super.onDestroy();
         // Unregister the receiver to avoid memory leaks
         unregisterReceiver(vpnErrorReceiver);
+        unregisterReceiver(vpnStatusReceiver); // Unregister status receiver
     }
 
     private void startVpnService() {
