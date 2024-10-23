@@ -13,6 +13,7 @@ import java.nio.channels.DatagramChannel;
 import android.content.Intent; // For creating an Intent to broadcast
 import android.content.Context; // If needed for certain context operations
 
+import android.util.Log;
 
 
 
@@ -27,20 +28,20 @@ public class MaskService extends VpnService {
     public int onStartCommand(Intent intent, int flags, int startId) {
         String action = intent.getAction();
         if ("START_VPN".equals(action)) {
-            startVpn();
+            startVpnService();
         } else if ("STOP_VPN".equals(action)) {
-            stopVpn();
+            stopVpnService();
         }
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
-        stopVpn();
+        stopVpnService();
         super.onDestroy();
     }
 
-    public void startVpn() {
+    public void startVpnService() {
         Builder builder = new Builder();
 
         builder.setSession("USA VPN")
@@ -57,6 +58,12 @@ public class MaskService extends VpnService {
         
         }
         
+        if (vpnInterface == null) {
+            Log.e("MaskService", "VPN interface is null. Cannot start VPN thread.");
+            return;
+        }
+
+        
         if (vpnInterface != null) {
             vpnThread = new Thread(() -> {
                 try {
@@ -70,6 +77,11 @@ public class MaskService extends VpnService {
                         return; // Exit the thread if connection fails
                     }
                     
+                    if (tunnel == null || !tunnel.isConnected()) {
+                        broadcastError("VPN tunnel failed to connect");
+                        return;
+                    }
+
                     FileInputStream in = new FileInputStream(vpnInterface.getFileDescriptor());
                     ByteBuffer packet = ByteBuffer.allocate(32767);
                     while (!Thread.currentThread().isInterrupted()) {
@@ -89,7 +101,7 @@ public class MaskService extends VpnService {
         }
     }
 
-    public void stopVpn() {
+    public void stopVpnService() {
         if (vpnThread != null && vpnThread.isAlive()) {
             vpnThread.interrupt();
             vpnThread = null;
