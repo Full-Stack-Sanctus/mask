@@ -31,6 +31,27 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+    
+    // Define a BroadcastReceiver to listen for status broadcasts
+    private final BroadcastReceiver vpnStatusReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String statusMessage = intent.getStringExtra("status_message");
+            if (statusMessage != null) {
+                showSnackbar(statusMessage); // Show snackbar for status message
+            }
+        }
+    };
+
+
+// Don't forget to unregister in onDestroy
+@Override
+protected void onDestroy() {
+    super.onDestroy();
+    unregisterReceiver(vpnErrorReceiver);
+    unregisterReceiver(vpnStatusReceiver); // Unregister status receiver
+}
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
