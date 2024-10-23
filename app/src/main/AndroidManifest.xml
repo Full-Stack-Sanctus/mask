@@ -4,7 +4,6 @@
     <uses-permission android:name="android.permission.VPN" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     
-    <uses-permission android:name="android.permission.BIND_VPN_SERVICE" />
 
 
     <application
