@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         // Unregister the receiver to avoid memory leaks
         unregisterReceiver(vpnErrorReceiver);
-        unregisterReceiver(vpnStatusReceiver); // Unregister status receiver
     }
 
     private void startVpnService() {
