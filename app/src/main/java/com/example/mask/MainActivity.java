@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
              registerReceiver(vpnErrorReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
         } else {
-             registerReceiver(vpnErrorReceiver, filter); // No flag needed for older versions
+             registerReceiver(vpnErrorReceiver, filter, Context.RECEIVER_NOT_EXPORTED, null); // No flag needed for older versions
         }
     }
 
