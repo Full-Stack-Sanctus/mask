@@ -61,7 +61,14 @@ public class MaskService extends VpnService {
             vpnThread = new Thread(() -> {
                 try {
                     DatagramChannel tunnel = DatagramChannel.open();
-                    tunnel.connect(new InetSocketAddress(IpConfig.SERVER_IP, IpConfig.SERVER_PORT)); // Replace with actual server IP and port
+                    // Attempt to connect to the VPN server
+                    try {
+                        tunnel.connect(new InetSocketAddress(IpConfig.SERVER_IP, IpConfig.SERVER_PORT)); // Attempt to connect
+                    } catch (IOException e) {
+                        Log.e("MaskService", "Invalid server IP or port", e);
+                        broadcastError("Invalid server IP or port: " + e.getMessage());  // Broadcast error message
+                        return; // Exit the thread if connection fails
+                    }
                     
                     FileInputStream in = new FileInputStream(vpnInterface.getFileDescriptor());
                     ByteBuffer packet = ByteBuffer.allocate(32767);
@@ -107,6 +114,7 @@ public class MaskService extends VpnService {
         Intent statusIntent = new Intent("com.example.mask.VPN_STATUS");
         statusIntent.setPackage(getPackageName());
         statusIntent.putExtra("status_message", statusMessage);
+        sendBroadcast(statusIntent);
     }
 
     
