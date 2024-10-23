@@ -61,3 +61,13 @@ jobs:
       with:
         name: app-debug.apk
         path: app/build/outputs/apk/debug/app-debug.apk
+        
+        
+        
+    - name: Upload log file as an artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: app-log
+        path: src/main/java/com/example/log/app.log
+        retention-days: 5  # Optional: Set how long to keep the artifact
+          

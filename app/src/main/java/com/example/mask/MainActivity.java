@@ -15,7 +15,9 @@ import android.util.Log;
 import com.google.android.material.snackbar.Snackbar; // For displaying Snackbar
 
 // Import MaskService from the correct package
-import service.MaskService;
+import com.example.service.MaskService;
+
+import com.example.log.MyLogger;
 
 import config.IpConfig;
 
@@ -45,13 +47,20 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        // Setup the logger
+        setupLogger();
 
         Button startVpnButton = findViewById(R.id.startVpnButton);
         startVpnButton.setOnClickListener(v -> {
             // Start VPN logic
             startVpnService();
+            
+            logInfo("StartButton have been clicked!");
+            
         });
 
         Button stopVpnButton = findViewById(R.id.stopVpnButton);
