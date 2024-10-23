@@ -102,6 +102,7 @@ public class MaskService extends VpnService {
     // Method to broadcast error messages
     private void broadcastError(String errorMessage) {
         Intent errorIntent = new Intent("com.example.mask.VPN_ERROR");
+        errorIntent.setPackage(getPackageName());
         errorIntent.putExtra("error_message", errorMessage);
         sendBroadcast(errorIntent);
     }
