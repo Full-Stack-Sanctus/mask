@@ -56,7 +56,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Register the BroadcastReceiver to listen for VPN errors
         IntentFilter filter = new IntentFilter("com.example.mask.VPN_ERROR");
-        registerReceiver(vpnErrorReceiver, filter);
+        ContextCompat.registerReceiver(
+        this,
+        vpnErrorReceiver,
+        filter,
+        ContextCompat.RECEIVER_NOT_EXPORTED // Specify the receiver is not exported
+        );
     }
 
     @Override
