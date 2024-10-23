@@ -52,7 +52,7 @@ public class MaskService extends VpnService {
         try {
             vpnInterface = builder.establish();
         } catch (Exception e) {
-            Log.e("MaskService", "Failed to establish VPN interface", e);
+            // Log.e("MaskService", "Failed to establish VPN interface", e);
             broadcastError("Failed to establish VPN interface: " + e.getMessage());  // Broadcast error message
         
         }
@@ -65,7 +65,7 @@ public class MaskService extends VpnService {
                     try {
                         tunnel.connect(new InetSocketAddress(IpConfig.SERVER_IP, IpConfig.SERVER_PORT)); // Attempt to connect
                     } catch (IOException e) {
-                        Log.e("MaskService", "Invalid server IP or port", e);
+                        // Log.e("MaskService", "Invalid server IP or port", e);
                         broadcastError("Invalid server IP or port: " + e.getMessage());  // Broadcast error message
                         return; // Exit the thread if connection fails
                     }
@@ -81,7 +81,7 @@ public class MaskService extends VpnService {
                         }
                     }
                 } catch (Exception e) {
-                    Log.e("MaskService", "Error in VPN thread", e);
+                    // Log.e("MaskService", "Error in VPN thread", e);
                     broadcastError("Error in VPN thread: " + e.getMessage());  // Broadcast error message
                 }
             });
