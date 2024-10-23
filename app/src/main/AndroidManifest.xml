@@ -30,5 +30,13 @@
             </intent-filter>
         </service>
         
+        <receiver android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.mask.VPN_ERROR" />
+                <action android:name="com.example.mask.VPN_STATUS" />
+            </intent-filter>
+        </receiver>
+
+        
     </application>
 </manifest>
