@@ -94,5 +94,7 @@ public class MainActivity extends AppCompatActivity {
     // Method to show the Snackbar
     private void showSnackbar(String message) {
         Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
-    }
+        Log.i("MainActivity", "Showing Snackbar: " + message); // Log the Snackbar event
+}
+
 }
