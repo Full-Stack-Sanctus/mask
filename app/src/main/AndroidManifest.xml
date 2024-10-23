@@ -28,7 +28,7 @@
         </activity>
 
         <service
-            android:name=".service.MaskService"
+            android:name="com.example.service.MaskService"
             android:permission="android.permission.BIND_VPN_SERVICE"
             android:exported="true">
             
