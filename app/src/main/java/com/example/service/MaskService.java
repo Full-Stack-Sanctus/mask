@@ -115,6 +115,7 @@ public class MaskService extends VpnService {
         statusIntent.setPackage(getPackageName());
         statusIntent.putExtra("status_message", statusMessage);
         sendBroadcast(statusIntent);
+        Log.i("MaskService", "Broadcasting status: " + statusMessage); // Log the broadcast
     }
 
     
@@ -124,6 +125,7 @@ public class MaskService extends VpnService {
         errorIntent.setPackage(getPackageName());
         errorIntent.putExtra("error_message", errorMessage);
         sendBroadcast(errorIntent);
+        Log.i("MaskService", "Broadcasting error: " + errorMessage); // Log the broadcast
     }
     
     

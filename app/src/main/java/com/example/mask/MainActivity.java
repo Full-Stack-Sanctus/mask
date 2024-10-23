@@ -21,24 +21,20 @@ public class MainActivity extends AppCompatActivity {
     private Button startVpnButton;
     private Button stopVpnButton;
 
-    // Define a BroadcastReceiver to listen for error broadcasts
+    // Define your BroadcastReceiver to listen for error broadcasts
     private final BroadcastReceiver vpnErrorReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String errorMessage = intent.getStringExtra("error_message");
-            if (errorMessage != null) {
-                showSnackbar(errorMessage);
-            }
-        }
-    };
-    
-    // Define a BroadcastReceiver to listen for status broadcasts
-    private final BroadcastReceiver vpnStatusReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String statusMessage = intent.getStringExtra("status_message");
-            if (statusMessage != null) {
-                showSnackbar(statusMessage); // Show snackbar for status message
+            if ("com.example.mask.VPN_ERROR".equals(intent.getAction())) {
+                String errorMessage = intent.getStringExtra("error_message");
+                if (errorMessage != null) {
+                    showSnackbar("Error: " + errorMessage);
+                }
+            } else if ("com.example.mask.VPN_STATUS".equals(intent.getAction())) {
+                String statusMessage = intent.getStringExtra("status_message");
+                if (statusMessage != null) {
+                    showSnackbar("Status: " + statusMessage);
+                }
             }
         }
     };
@@ -68,14 +64,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         
-        // In onCreate, register the receiver for status broadcasts
-        IntentFilter statusFilter = new IntentFilter("com.example.mask.VPN_STATUS");
-        registerReceiver(vpnStatusReceiver, statusFilter, Context.RECEIVER_NOT_EXPORTED);
-
-        
-        // Register the BroadcastReceiver to listen for VPN errors
-        IntentFilter filter = new IntentFilter("com.example.mask.VPN_ERROR");
-        registerReceiver(vpnErrorReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
+        // Register the BroadcastReceiver to listen for VPN errors and status
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.example.mask.VPN_ERROR");
+        filter.addAction("com.example.mask.VPN_STATUS");
+        registerReceiver(vpnErrorReceiver, filter);
+    
     }
 
     @Override
