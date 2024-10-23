@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
+
+
 import com.google.android.material.snackbar.Snackbar; // For displaying Snackbar
 
 // Import MaskService from the correct package
