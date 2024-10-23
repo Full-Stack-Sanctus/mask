@@ -53,6 +53,8 @@ public class MaskService extends VpnService {
             vpnInterface = builder.establish();
         } catch (Exception e) {
             Log.e("MaskService", "Failed to establish VPN interface", e);
+            broadcastError("Failed to establish VPN interface: " + e.getMessage());  // Broadcast error message
+        
         }
         
         if (vpnInterface != null) {
@@ -73,6 +75,7 @@ public class MaskService extends VpnService {
                     }
                 } catch (Exception e) {
                     Log.e("MaskService", "Error in VPN thread", e);
+                    broadcastError("Error in VPN thread: " + e.getMessage());  // Broadcast error message
                 }
             });
             vpnThread.start();
@@ -90,14 +93,22 @@ public class MaskService extends VpnService {
                 vpnInterface.close();
             } catch (IOException e) {
                 Log.e("MaskService", "Error closing VPN interface", e);
+                broadcastError("Error closing VPN interface: " + e.getMessage());  // Broadcast error message
             }
             vpnInterface = null;
         }
         
         Log.i("MaskService", "VPN stopped");
+        broadcastStatus("VPN Stopped");  // Broadcast error message
     }
-    
-    
+        
+    // Method to broadcast status messages
+    private void broadcastStatus(String statusMessage) {
+        Intent statusIntent = new Intent("com.example.mask.VPN_STATUS");
+        statusIntent.setPackage(getPackageName());
+        statusIntent.putExtra("status_message", statusMessage);
+    }
+
     
     // Method to broadcast error messages
     private void broadcastError(String errorMessage) {

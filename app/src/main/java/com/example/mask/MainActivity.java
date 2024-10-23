@@ -53,7 +53,12 @@ public class MainActivity extends AppCompatActivity {
                 stopVpnService();
             }
         });
+        
+        // In onCreate, register the receiver for status broadcasts
+        IntentFilter statusFilter = new IntentFilter("com.example.mask.VPN_STATUS");
+        registerReceiver(vpnStatusReceiver, statusFilter, Context.RECEIVER_NOT_EXPORTED);
 
+        
         // Register the BroadcastReceiver to listen for VPN errors
         IntentFilter filter = new IntentFilter("com.example.mask.VPN_ERROR");
         registerReceiver(vpnErrorReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
