@@ -50,22 +50,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startVpnButton = findViewById(R.id.startVpnButton);
-        stopVpnButton = findViewById(R.id.stopVpnButton);
-
-        startVpnButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startVpnService();
-            }
+        Button startVpnButton = findViewById(R.id.startVpnButton);
+        startVpnButton.setOnClickListener(v -> {
+            // Start VPN logic
+            startVpnService();
         });
 
-        stopVpnButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopVpnService();
-            }
+        Button stopVpnButton = findViewById(R.id.stopVpnButton);
+        stopVpnButton.setOnClickListener(v -> {
+            // Stop VPN logic
+            stopVpnService();
         });
+
         
         // Register the BroadcastReceiver to listen for VPN errors and status
         IntentFilter filter = new IntentFilter();

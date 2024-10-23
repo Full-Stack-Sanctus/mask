@@ -28,9 +28,9 @@ public class MaskService extends VpnService {
     public int onStartCommand(Intent intent, int flags, int startId) {
         String action = intent.getAction();
         if ("START_VPN".equals(action)) {
-            startVpnService();
+            startVpn();
         } else if ("STOP_VPN".equals(action)) {
-            stopVpnService();
+            stopVpn();
         }
         return START_STICKY;
     }
@@ -41,7 +41,7 @@ public class MaskService extends VpnService {
         super.onDestroy();
     }
 
-    public void startVpnService() {
+    public void startVpn() {
         Builder builder = new Builder();
 
         builder.setSession("USA VPN")
@@ -101,7 +101,7 @@ public class MaskService extends VpnService {
         }
     }
 
-    public void stopVpnService() {
+    public void stopVpn() {
         if (vpnThread != null && vpnThread.isAlive()) {
             vpnThread.interrupt();
             vpnThread = null;
