@@ -21,9 +21,7 @@ import config.IpConfig;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button startVpnButton;
-    private Button stopVpnButton;
-
+    
     // Define your BroadcastReceiver to listen for error broadcasts
     private final BroadcastReceiver vpnErrorReceiver = new BroadcastReceiver() {
         @Override
