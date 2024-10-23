@@ -37,7 +37,7 @@ public class MaskService extends VpnService {
 
     @Override
     public void onDestroy() {
-        stopVpnService();
+        stopVpn();
         super.onDestroy();
     }
 
