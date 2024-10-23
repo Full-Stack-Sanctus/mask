@@ -8,10 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Build;
-import com.google.android.material.snackbar.Snackbar; // For displaying Snackbar
 
-import androidx.core.content.ContextCompat; // Import ContextCompat
+import com.google.android.material.snackbar.Snackbar; // For displaying Snackbar
 
 // Import MaskService from the correct package
 import service.MaskService;
@@ -58,11 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Register the BroadcastReceiver to listen for VPN errors
         IntentFilter filter = new IntentFilter("com.example.mask.VPN_ERROR");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-             registerReceiver(vpnErrorReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
-        } else {
-             registerReceiver(vpnErrorReceiver, filter, Context.RECEIVER_NOT_EXPORTED, null); // No flag needed for older versions
-        }
+        registerReceiver(vpnErrorReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
     }
 
     @Override
