@@ -20,7 +20,7 @@ android {
     defaultConfig {
         // Specify your unique Application ID.
         applicationId "com.example.mask"
-        minSdkVersion 21 // Update according to your requirements
+        minSdkVersion 26 // Update according to your requirements
         targetSdkVersion 34
         versionCode maskVersionCode.toInteger()
         versionName maskVersionName
