@@ -15,9 +15,9 @@ import android.util.Log;
 import com.google.android.material.snackbar.Snackbar; // For displaying Snackbar
 
 // Import MaskService from the correct package
-import com.example.service.MaskService;
+import service.MaskService;
 
-import com.example.log.MyLogger;
+import log.MyLogger;
 
 import config.IpConfig;
 
