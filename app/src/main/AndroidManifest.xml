@@ -24,18 +24,14 @@
 
         <service
             android:name="com.example.service.MaskService"
+            android:permission="android.permission.BIND_VPN_SERVICE"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.net.VpnService" />
             </intent-filter>
         </service>
         
-        <receiver android:exported="false">
-            <intent-filter>
-                <action android:name="com.example.mask.VPN_ERROR" />
-                <action android:name="com.example.mask.VPN_STATUS" />
-            </intent-filter>
-        </receiver>
+        
 
         
     </application>
