@@ -5,6 +5,9 @@ import android.os.ParcelFileDescriptor;
 import android.util.Log;
 import android.content.Intent;
 
+import java.io.IOException;
+
+
 import core.MaskCore; // Import MaskCore
 
 public class MaskService extends VpnService {
