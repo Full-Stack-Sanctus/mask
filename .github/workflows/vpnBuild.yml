@@ -64,12 +64,12 @@ jobs:
     
     
     - name: List files in workspace
-      run: ls -R build/libs  # This will list all files in the current directory and subdirectories
+      run: ls -R app/build/libs  # This will list all files in the current directory and subdirectories
   
     
           
     - name: Run Application
-      run: java -jar build/libs/YourApp.jar
+      run: java -jar app/build/libs/YourApp.jar
             
         
     - name: Upload log file as an artifact
