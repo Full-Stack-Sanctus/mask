@@ -14,12 +14,12 @@ def maskVersionCode = localProperties.getProperty('mask.versionCode', '1')
 def maskVersionName = localProperties.getProperty('mask.versionName', '1.0')
 
 android {
-    namespace "com.example.mask"
+    namespace "com.mask"
     compileSdkVersion 34
 
     defaultConfig {
         // Specify your unique Application ID.
-        applicationId "com.example.mask"
+        applicationId "com.mask"
         minSdkVersion 26 // Update according to your requirements
         targetSdkVersion 34
         versionCode maskVersionCode.toInteger()
@@ -44,7 +44,7 @@ android {
         from sourceSets.main.java.srcDirs  // Include the main source set output
         manifest {
             attributes(
-                'Main-Class': 'com.example.mask'  // Set your main class
+                'Main-Class': 'com.mask.MainActivity'  // Set your main class
             )
         }
     }

@@ -123,7 +123,7 @@ public class MaskService extends VpnService {
         
     // Method to broadcast status messages
     private void broadcastStatus(String statusMessage) {
-        Intent statusIntent = new Intent("com.example.mask.VPN_STATUS");
+        Intent statusIntent = new Intent("com.mask.VPN_STATUS");
         statusIntent.setPackage(getPackageName());
         statusIntent.putExtra("status_message", statusMessage);
         sendBroadcast(statusIntent);
@@ -133,7 +133,7 @@ public class MaskService extends VpnService {
     
     // Method to broadcast error messages
     private void broadcastError(String errorMessage) {
-        Intent errorIntent = new Intent("com.example.mask.VPN_ERROR");
+        Intent errorIntent = new Intent("com.mask.VPN_ERROR");
         errorIntent.setPackage(getPackageName());
         errorIntent.putExtra("error_message", errorMessage);
         sendBroadcast(errorIntent);

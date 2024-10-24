@@ -1,4 +1,4 @@
-package com.example.mask;
+package mask;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -28,12 +28,12 @@ public class MainActivity extends AppCompatActivity {
     private final BroadcastReceiver vpnErrorReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if ("com.example.mask.VPN_ERROR".equals(intent.getAction())) {
+            if ("com.mask.VPN_ERROR".equals(intent.getAction())) {
                 String errorMessage = intent.getStringExtra("error_message");
                 if (errorMessage != null) {
                     showSnackbar("Error: " + errorMessage);
                 }
-            } else if ("com.example.mask.VPN_STATUS".equals(intent.getAction())) {
+            } else if ("com.mask.VPN_STATUS".equals(intent.getAction())) {
                 String statusMessage = intent.getStringExtra("status_message");
                 if (statusMessage != null) {
                     showSnackbar("Status: " + statusMessage);
@@ -72,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
         
         // Register the BroadcastReceiver to listen for VPN errors and status
         IntentFilter filter = new IntentFilter();
-        filter.addAction("com.example.mask.VPN_ERROR");
-        filter.addAction("com.example.mask.VPN_STATUS");
+        filter.addAction("com.mask.VPN_ERROR");
+        filter.addAction("com.mask.VPN_STATUS");
         registerReceiver(vpnErrorReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
     
     }
