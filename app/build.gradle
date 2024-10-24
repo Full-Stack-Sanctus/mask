@@ -26,7 +26,25 @@ android {
         versionName maskVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    
 
+
+
+    // existing configurations...
+
+    // Define the JAR task
+    task jar(type: Jar) {
+        archiveBaseName.set("YourApp")  // Set the base name for the JAR
+        from sourceSets.main.output  // Include the main source set output
+        manifest {
+            attributes(
+                'Main-Class': 'com.trace.mask'  // Set your main class
+            )
+        }
+    }
+
+
+    
     signingConfigs {
         release {
             storeFile file(System.getenv("KEYSTORE_FILE"))
