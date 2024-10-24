@@ -62,10 +62,15 @@ jobs:
         name: app-debug.apk
         path: app/build/outputs/apk/debug/app-debug.apk
     
+    
     - name: List files in workspace
-      run: ls app/build/  # This will list all files in the current directory and subdirectories
+      run: ls -R build/libs  # This will list all files in the current directory and subdirectories
   
-        
+    
+          
+    - name: Run Application
+      run: java -jar build/libs/YourApp.jar
+            
         
     - name: Upload log file as an artifact
       uses: actions/upload-artifact@v3
@@ -74,8 +79,5 @@ jobs:
         path: app/src/main/java/com/example/log/app.log
         retention-days: 5  # Optional: Set how long to keep the artifact
     
-          
-    - name: Run Application
-      run: java -jar app/build/libs/YourApp.jar
-        
+
    
