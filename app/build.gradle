@@ -1,6 +1,9 @@
 plugins {
     id 'com.android.application'
+    id 'application'
 }
+
+mainClassName = 'com.mask.MainActivity' // Specify your main class
 
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
@@ -31,7 +34,7 @@ android {
 
     sourceSets {
         main {
-            java.srcDirs += 'app/src/main/java'
+            java.srcDirs += ['app/src/main/java']
         }
     }
 
