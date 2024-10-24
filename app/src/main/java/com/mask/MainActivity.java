@@ -1,4 +1,4 @@
-package mask;
+package com.mask;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
