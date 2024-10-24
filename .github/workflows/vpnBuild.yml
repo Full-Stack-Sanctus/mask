@@ -83,7 +83,7 @@ jobs:
     
           
     - name: Run Application
-      run: java -jar app/build/libs/YourApp.jar
+      run: java -jar app/build/libs/Mask.jar
             
         
     - name: Upload log file as an artifact
