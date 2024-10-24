@@ -61,7 +61,10 @@ jobs:
       with:
         name: app-debug.apk
         path: app/build/outputs/apk/debug/app-debug.apk
-        
+    
+    - name: List files in workspace
+      run: ls -R  # This will list all files in the current directory and subdirectories
+  
         
         
     - name: Upload log file as an artifact
