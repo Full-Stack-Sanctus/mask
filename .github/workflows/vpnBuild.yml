@@ -71,6 +71,14 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: app-log
-        path: app/build/logs/app.log
+        path: app/build/reports/app.log
         retention-days: 5  # Optional: Set how long to keep the artifact
           
+    
+    - name: Upload lint log file as an artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: lint-results-debug.txt
+        path: app/build/reports/lint-results-debug.txt
+        retention-days: 5  # Optional: Set how long to keep the artifact
+        

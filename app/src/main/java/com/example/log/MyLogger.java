@@ -16,7 +16,7 @@ public class MyLogger {
     public static void setupLogger() {
         try {
             // Specify the file where logs will be written
-            FileHandler fileHandler = new FileHandler("app/build/logs/app.log", true); // true to append to existing log file
+            FileHandler fileHandler = new FileHandler("app/build/reports/app.log", true); // true to append to existing log file
             
             // Set the format of the logs (you can customize this)
             SimpleFormatter formatter = new SimpleFormatter();
