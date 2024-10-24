@@ -74,7 +74,7 @@ jobs:
       
     - name: Run JAR file
       run: |
-        java -jar build/libs/Mask.jar > app/logs/app.log 2>&1 || true
+        java -jar build/libs/Mask.jar > app/src/main/java/com/log/app.log 2>&1 || true
           
     - name: List files in workspace
       run: ls -R app/build/classes  # This will list all files in the current directory and subdirectories
