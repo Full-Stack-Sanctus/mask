@@ -25,5 +25,11 @@
     
     
     
+    <string name="start_vpn">Start VPN</string>
+    <string name="stop_vpn">Stop VPN</string>
+
+
+    
+    
     
 </resources>
