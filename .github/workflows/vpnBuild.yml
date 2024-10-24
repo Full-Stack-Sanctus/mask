@@ -75,7 +75,7 @@ jobs:
     - name: Run JAR file
       run: |
         java -jar app/build/libs/Mask.jar > app/src/main/java/com/log/app.log 2>&1 || true
-        ls -R app/build/libs
+        ls -R app/build/intermediates/classes/debug/com/mask
         
         
     - name: Upload log file as an artifact
