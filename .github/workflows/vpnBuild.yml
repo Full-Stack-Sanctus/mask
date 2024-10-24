@@ -69,7 +69,7 @@ jobs:
         KEY_ALIAS: ${{ secrets.KEY_ALIAS }}               # Add your key alias secret
         KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}         # Add your key password secret
   
-      run: ./gradlew myCustomJar
+      run: ./gradlew myCustomJar --stacktrace
       
       
     - name: Run JAR file
