@@ -52,7 +52,7 @@ jobs:
         KEY_ALIAS: ${{ secrets.KEY_ALIAS }}               # Add your key alias secret
         KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}         # Add your key password secret
           
-      run: ./gradlew build --stacktrace
+      run: ./gradlew clean build --info --stacktrace
 
       
     # Upload the built APK as an artifact
