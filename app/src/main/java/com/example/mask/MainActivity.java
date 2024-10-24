@@ -52,14 +52,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         
         // Setup the logger
-        setupLogger();
+        MyLogger.setupLogger();
 
         Button startVpnButton = findViewById(R.id.startVpnButton);
         startVpnButton.setOnClickListener(v -> {
             // Start VPN logic
             startVpnService();
             
-            logInfo("StartButton have been clicked!");
+            MyLogger.logInfo("StartButton have been clicked!");
             
         });
 
