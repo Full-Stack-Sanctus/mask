@@ -87,9 +87,9 @@ jobs:
         retention-days: 5  # Optional: Set how long to keep the artifact
     
 
-   - name: Upload Logs
-     uses: actions/upload-artifact@v3
-     with:
+    - name: Upload Logs
+      uses: actions/upload-artifact@v3
+      with:
         name: application-logs
         path: app/logs/app.log  # Adjust this path as necessary
           
