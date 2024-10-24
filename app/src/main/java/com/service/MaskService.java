@@ -3,26 +3,14 @@ package service;
 import android.net.VpnService;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
+import android.content.Intent;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
-import java.nio.channels.DatagramChannel;
-
-import android.content.Intent; // For creating an Intent to broadcast
-import android.content.Context; // If needed for certain context operations
-
-import android.util.Log;
-
-
-
-import config.IpConfig; // Adjust the import path based on your project structure
-
+import core.MaskCore; // Import MaskCore
 
 public class MaskService extends VpnService {
     private ParcelFileDescriptor vpnInterface = null;
     private Thread vpnThread = null;
+    private MaskCore maskCore;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -42,63 +30,40 @@ public class MaskService extends VpnService {
     }
 
     public void startVpn() {
-        Builder builder = new Builder();
-
+        VpnService.Builder builder = new VpnService.Builder();
         builder.setSession("USA VPN")
                .addAddress("10.0.0.2", 24)
                .addRoute("0.0.0.0", 0)
                .addDnsServer("8.8.8.8")
                .setMtu(1500);
-        
+
         try {
             vpnInterface = builder.establish();
         } catch (Exception e) {
-            // Log.e("MaskService", "Failed to establish VPN interface", e);
-            broadcastError("Failed to establish VPN interface: " + e.getMessage());  // Broadcast error message
-        
+            broadcastError("Failed to establish VPN interface: " + e.getMessage()); 
+            return;
         }
-        
+
         if (vpnInterface == null) {
             Log.e("MaskService", "VPN interface is null. Cannot start VPN thread.");
             return;
         }
 
-        
-        if (vpnInterface != null) {
-            vpnThread = new Thread(() -> {
-                try {
-                    DatagramChannel tunnel = DatagramChannel.open();
-                    // Attempt to connect to the VPN server
-                    try {
-                        tunnel.connect(new InetSocketAddress(IpConfig.SERVER_IP, IpConfig.SERVER_PORT)); // Attempt to connect
-                    } catch (IOException e) {
-                        // Log.e("MaskService", "Invalid server IP or port", e);
-                        broadcastError("Invalid server IP or port: " + e.getMessage());  // Broadcast error message
-                        return; // Exit the thread if connection fails
-                    }
-                    
-                    if (tunnel == null || !tunnel.isConnected()) {
-                        broadcastError("VPN tunnel failed to connect");
-                        return;
-                    }
+        // Initialize MaskCore with the VPN interface
+        maskCore = new MaskCore(vpnInterface);
 
-                    FileInputStream in = new FileInputStream(vpnInterface.getFileDescriptor());
-                    ByteBuffer packet = ByteBuffer.allocate(32767);
-                    while (!Thread.currentThread().isInterrupted()) {
-                        int length = in.read(packet.array());  // Reading from VPN interface
-                        if (length > 0) {
-                            packet.flip();
-                            tunnel.write(packet);  // Forwarding packet to USA server
-                            packet.clear();
-                        }
-                    }
-                } catch (Exception e) {
-                    // Log.e("MaskService", "Error in VPN thread", e);
-                    broadcastError("Error in VPN thread: " + e.getMessage());  // Broadcast error message
+        vpnThread = new Thread(() -> {
+            try {
+                if (maskCore.connectToServer()) {
+                    maskCore.handleTraffic();  // Start handling traffic
+                } else {
+                    broadcastError("Failed to connect to VPN server.");
                 }
-            });
-            vpnThread.start();
-        }
+            } catch (IOException e) {
+                broadcastError("Error in VPN thread: " + e.getMessage());
+            }
+        });
+        vpnThread.start();
     }
 
     public void stopVpn() {
@@ -106,39 +71,33 @@ public class MaskService extends VpnService {
             vpnThread.interrupt();
             vpnThread = null;
         }
-        
-        if (vpnInterface != null) {
-            try {
-                vpnInterface.close();
-            } catch (IOException e) {
-                Log.e("MaskService", "Error closing VPN interface", e);
-                broadcastError("Error closing VPN interface: " + e.getMessage());  // Broadcast error message
+
+        try {
+            if (maskCore != null) {
+                maskCore.disconnect();  // Disconnect the VPN
             }
-            vpnInterface = null;
+        } catch (IOException e) {
+            broadcastError("Error closing VPN: " + e.getMessage());
         }
-        
+
         Log.i("MaskService", "VPN stopped");
-        broadcastStatus("VPN Stopped");  // Broadcast error message
+        broadcastStatus("VPN Stopped");
     }
-        
-    // Method to broadcast status messages
+
+    // Broadcast methods (unchanged)
     private void broadcastStatus(String statusMessage) {
         Intent statusIntent = new Intent("com.mask.VPN_STATUS");
         statusIntent.setPackage(getPackageName());
         statusIntent.putExtra("status_message", statusMessage);
         sendBroadcast(statusIntent);
-        Log.i("MaskService", "Broadcasting status: " + statusMessage); // Log the broadcast
     }
 
-    
-    // Method to broadcast error messages
     private void broadcastError(String errorMessage) {
         Intent errorIntent = new Intent("com.mask.VPN_ERROR");
         errorIntent.setPackage(getPackageName());
         errorIntent.putExtra("error_message", errorMessage);
         sendBroadcast(errorIntent);
-        Log.i("MaskService", "Broadcasting error: " + errorMessage); // Log the broadcast
     }
-    
-    
 }
+
+// Acts as the bridge between the Android Service and the core VPN logic handled by MaskCore

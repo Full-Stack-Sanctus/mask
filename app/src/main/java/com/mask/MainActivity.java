@@ -8,22 +8,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.util.Log;
-
 
 import com.google.android.material.snackbar.Snackbar; // For displaying Snackbar
 
-// Import MaskService from the correct package
-import service.MaskService;
-
-import log.MyLogger;
-
-import config.IpConfig;
+import service.MaskService; // Import your MaskService
+import log.MyLogger; // Import your logger
+import config.IpConfig; // Import your configuration class
 
 public class MainActivity extends AppCompatActivity {
 
-    
     // Define your BroadcastReceiver to listen for error broadcasts
     private final BroadcastReceiver vpnErrorReceiver = new BroadcastReceiver() {
         @Override
@@ -42,12 +36,8 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
@@ -56,26 +46,22 @@ public class MainActivity extends AppCompatActivity {
 
         Button startVpnButton = findViewById(R.id.startVpnButton);
         startVpnButton.setOnClickListener(v -> {
-            // Start VPN logic
+            // Start VPN service
             startVpnService();
-            
-            MyLogger.logInfo("StartButton have been clicked!");
-            
+            MyLogger.logInfo("Start button has been clicked!");
         });
 
         Button stopVpnButton = findViewById(R.id.stopVpnButton);
         stopVpnButton.setOnClickListener(v -> {
-            // Stop VPN logic
+            // Stop VPN service
             stopVpnService();
         });
 
-        
         // Register the BroadcastReceiver to listen for VPN errors and status
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.mask.VPN_ERROR");
         filter.addAction("com.mask.VPN_STATUS");
         registerReceiver(vpnErrorReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
-    
     }
 
     @Override
@@ -101,6 +87,5 @@ public class MainActivity extends AppCompatActivity {
     private void showSnackbar(String message) {
         Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
         Log.i("MainActivity", "Showing Snackbar: " + message); // Log the Snackbar event
-}
-
+    }
 }

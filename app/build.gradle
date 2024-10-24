@@ -32,7 +32,7 @@ android {
 
     sourceSets {
         main {
-            java.srcDirs += ['src/main/java']
+            java.srcDirs += ['app/src/main/java']
         }
     }
 
@@ -47,6 +47,11 @@ android {
             attributes(
                 'Main-Class': 'com.mask.MainActivity'  // Set your main class
             )
+        }
+        
+        // Optional: include additional resources if needed
+        from('src/main/resources') {
+            include '**/*' // Include all resources
         }
     }
 
@@ -92,6 +97,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1' // For Lifecycle support
+    implementation 'com.squareup.okhttp3:okhttp:4.9.2' // If you need networking capabilities
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
