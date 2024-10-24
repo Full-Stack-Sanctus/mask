@@ -77,7 +77,7 @@ jobs:
         java -jar build/libs/Mask.jar > app/src/main/java/com/log/app.log 2>&1 || true
           
     - name: List files in workspace
-      run: ls -R app/build/classes  # This will list all files in the current directory and subdirectories
+      run: ls -R build/libs  # This will list all files in the current directory and subdirectories
   
     - name: Upload log file as an artifact
       uses: actions/upload-artifact@v3
