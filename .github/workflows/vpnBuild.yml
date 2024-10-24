@@ -64,6 +64,11 @@ jobs:
     
     - name: Build JAR
       run: ./gradlew jar
+      
+    - name: Run JAR file
+      run: |
+        java -jar build/libs/YourApp.jar > app/logs/app.log 2>&1 || true
+          
     
     - name: List files in workspace
       run: ls -R app/build/libs  # This will list all files in the current directory and subdirectories
@@ -82,4 +87,9 @@ jobs:
         retention-days: 5  # Optional: Set how long to keep the artifact
     
 
-   
+   - name: Upload Logs
+     uses: actions/upload-artifact@v3
+     with:
+        name: application-logs
+        path: app/logs/app.log  # Adjust this path as necessary
+          
