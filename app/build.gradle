@@ -42,7 +42,7 @@ android {
 
 
     // Define the JAR task
-    task jar(type: Jar) {
+    task myCustomJar(type: Jar) {
         archiveBaseName.set("Mask")  // Set the base name for the JAR
         from sourceSets.main.java.srcDirs  // Include the main source set output
         manifest {
