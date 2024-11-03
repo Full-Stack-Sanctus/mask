@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast; // Import Toast
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 
@@ -47,8 +48,9 @@ public class MainActivity extends AppCompatActivity {
         Button startVpnButton = findViewById(R.id.startVpnButton);
         startVpnButton.setOnClickListener(v -> {
             // Start VPN service
-            startVpnService();
+            Toast.makeText(MainActivity.this, "Start VPN Button Clicked!", Toast.LENGTH_SHORT).show();
             MyLogger.logInfo("Start button has been clicked!");
+            startVpnService();
         });
 
         Button stopVpnButton = findViewById(R.id.stopVpnButton);
@@ -61,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.mask.VPN_ERROR");
         filter.addAction("com.mask.VPN_STATUS");
-        registerReceiver(vpnErrorReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
+        registerReceiver(vpnErrorReceiver, filter); // Removed Context.RECEIVER_NOT_EXPORTED for compatibility
     }
 
     @Override
