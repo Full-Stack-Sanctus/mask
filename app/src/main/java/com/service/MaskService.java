@@ -78,8 +78,6 @@ public class MaskService extends VpnService {
                     broadcastError("Failed to connect to VPN server.");
                 }
             } catch (Exception e) {
-                broadcastError("IO error in VPN thread: " + e.getMessage());
-            } catch (Exception e) {
                 broadcastError("Unexpected error in VPN thread: " + e.getMessage());
             }
         });
