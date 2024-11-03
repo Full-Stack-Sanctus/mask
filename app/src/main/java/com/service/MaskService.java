@@ -5,7 +5,6 @@ import android.os.ParcelFileDescriptor;
 import android.util.Log;
 import android.content.Intent;
 import android.widget.Toast;
-import android.content.Context; // Import Context
 
 import java.io.IOException;
 
@@ -43,14 +42,13 @@ public class MaskService extends VpnService {
 
         try {
             vpnInterface = builder.establish();
+            if (vpnInterface == null) {
+                Log.e("MaskService", "VPN interface is null. Cannot start VPN thread.");
+                showToast("VPN interface is null. Cannot start VPN thread.");
+                return;
+            }
         } catch (Exception e) {
             broadcastError("Failed to establish VPN interface: " + e.getMessage());
-            return;
-        }
-
-        if (vpnInterface == null) {
-            Log.e("MaskService", "VPN interface is null. Cannot start VPN thread.");
-            showToast("VPN interface is null. Cannot start VPN thread.");
             return;
         }
 
