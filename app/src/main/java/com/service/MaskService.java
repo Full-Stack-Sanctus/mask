@@ -14,6 +14,7 @@ public class MaskService extends VpnService {
     private ParcelFileDescriptor vpnInterface = null;
     private Thread vpnThread = null;
     private MaskCore maskCore;
+    private static final String TAG = "MaskService"; // Added a TAG for logging
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -43,10 +44,13 @@ public class MaskService extends VpnService {
         try {
             vpnInterface = builder.establish();
             if (vpnInterface == null) {
-                Log.e("MaskService", "VPN interface is null. Cannot start VPN thread.");
+                Log.e(TAG, "VPN interface is null. Cannot start VPN thread.");
                 showToast("VPN interface is null. Cannot start VPN thread.");
                 return;
             }
+        } catch (SecurityException e) {
+            broadcastError("VPN permissions error: " + e.getMessage());
+            return;
         } catch (Exception e) {
             broadcastError("Failed to establish VPN interface: " + e.getMessage());
             return;
@@ -63,7 +67,7 @@ public class MaskService extends VpnService {
                 } else {
                     broadcastError("Failed to connect to VPN server.");
                 }
-            } catch (IOException e) {
+            } catch (Exception e) { // Catch general exceptions
                 broadcastError("Error in VPN thread: " + e.getMessage());
             }
         });
@@ -81,11 +85,11 @@ public class MaskService extends VpnService {
                 maskCore.disconnect();  // Disconnect the VPN
                 showToast("VPN disconnected successfully.");
             }
-        } catch (IOException e) {
+        } catch (Exception e) { // Catch general exceptions
             broadcastError("Error closing VPN: " + e.getMessage());
         }
 
-        Log.i("MaskService", "VPN stopped");
+        Log.i(TAG, "VPN stopped");
         showToast("VPN stopped.");
         broadcastStatus("VPN Stopped");
     }
@@ -96,7 +100,7 @@ public class MaskService extends VpnService {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    // Broadcast methods (unchanged)
+    // Broadcast methods
     private void broadcastStatus(String statusMessage) {
         Intent statusIntent = new Intent("com.mask.VPN_STATUS");
         statusIntent.setPackage(getPackageName());
