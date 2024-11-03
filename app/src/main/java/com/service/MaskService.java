@@ -6,8 +6,6 @@ import android.util.Log;
 import android.content.Intent;
 import android.widget.Toast;
 
-import java.io.IOException;
-
 import com.core.MaskCore;
 
 public class MaskService extends VpnService {
@@ -30,7 +28,7 @@ public class MaskService extends VpnService {
             }
         } else {
             Log.e(TAG, "Received null intent.");
-            broadcastError("Received null intent.");
+            showToast("Received null intent.");
         }
         return START_STICKY;
     }
@@ -57,14 +55,13 @@ public class MaskService extends VpnService {
                 String message = "VPN interface is null. Cannot start VPN.";
                 Log.e(TAG, message);
                 showToast(message);
-                broadcastError(message);
                 return;
             }
         } catch (SecurityException e) {
-            broadcastError("VPN permissions error: " + e.getMessage());
+            showToast("VPN permissions error: " + e.getMessage());
             return;
         } catch (Exception e) {
-            broadcastError("Failed to establish VPN interface: " + e.getMessage());
+            showToast("Failed to establish VPN interface: " + e.getMessage());
             return;
         }
 
@@ -77,10 +74,10 @@ public class MaskService extends VpnService {
                     showToast("VPN started successfully.");
                     maskCore.handleTraffic();
                 } else {
-                    broadcastError("Failed to connect to VPN server.");
+                    showToast("Failed to connect to VPN server.");
                 }
             } catch (Exception e) {
-                broadcastError("Unexpected error in VPN thread: " + e.getMessage());
+                showToast("Unexpected error in VPN thread: " + e.getMessage());
             }
         });
         vpnThread.start();
@@ -98,38 +95,17 @@ public class MaskService extends VpnService {
             if (maskCore != null) {
                 maskCore.disconnect();
                 showToast("VPN disconnected successfully.");
-                broadcastStatus("VPN disconnected successfully.");
             }
         } catch (Exception e) {
-            broadcastError("Error disconnecting VPN: " + e.getMessage());
+            showToast("Error disconnecting VPN: " + e.getMessage());
         }
 
         Log.i(TAG, "VPN stopped.");
         showToast("VPN stopped.");
-        broadcastStatus("VPN stopped");
     }
 
     // Helper method to show a toast message
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    // Helper method to broadcast status updates
-    private void broadcastStatus(String statusMessage) {
-        Intent statusIntent = new Intent("com.mask.VPN_STATUS");
-        statusIntent.setPackage(getPackageName());
-        statusIntent.putExtra("status_message", statusMessage);
-        sendBroadcast(statusIntent);
-        Log.i(TAG, "Broadcasting status: " + statusMessage);
-    }
-
-    // Helper method to broadcast errors
-    private void broadcastError(String errorMessage) {
-        Intent errorIntent = new Intent("com.mask.VPN_ERROR");
-        errorIntent.setPackage(getPackageName());
-        errorIntent.putExtra("error_message", errorMessage);
-        sendBroadcast(errorIntent);
-        Log.e(TAG, "Broadcasting error: " + errorMessage);
-        showToast("Error: " + errorMessage);
     }
 }
