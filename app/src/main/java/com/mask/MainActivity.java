@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.mask.VPN_ERROR");
         filter.addAction("com.mask.VPN_STATUS");
-        registerReceiver(vpnErrorReceiver, filter); // Removed Context.RECEIVER_NOT_EXPORTED for compatibility
+        registerReceiver(vpnErrorReceiver, filter, Context.RECEIVER_NOT_EXPORTED); // Removed Context.RECEIVER_NOT_EXPORTED for compatibility
     }
 
     @Override
