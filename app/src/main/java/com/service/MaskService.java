@@ -22,8 +22,10 @@ public class MaskService extends VpnService {
         if (intent != null) {
             String action = intent.getAction();
             if ("START_VPN".equals(action)) {
+                showToast("Starting VPN..."); // Show message on screen
                 startVpn();
             } else if ("STOP_VPN".equals(action)) {
+                showToast("Stopping VPN..."); // Show message on screen
                 stopVpn();
             }
         } else {
