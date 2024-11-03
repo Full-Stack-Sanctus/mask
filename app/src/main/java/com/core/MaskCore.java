@@ -1,4 +1,4 @@
-package core;
+package com.core;
 
 import android.net.VpnService;
 import android.os.ParcelFileDescriptor;

@@ -1,4 +1,4 @@
-package service;
+package com.service;
 
 import android.net.VpnService;
 import android.os.ParcelFileDescriptor;
