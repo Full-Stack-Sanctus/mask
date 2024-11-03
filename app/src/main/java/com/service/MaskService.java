@@ -1,25 +1,18 @@
 package com.service;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Intent;
 import android.net.VpnService;
-import android.os.Build;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
+import android.content.Intent;
 import android.widget.Toast;
 
-import androidx.core.app.NotificationCompat;
-
 import com.core.MaskCore;
-import com.mask.MainActivity; // Update this with your actual MainActivity class path
+
+import com.example.mask.R;  // Replace com.example.mask with your actual package name
+
 
 public class MaskService extends VpnService {
     private static final String TAG = "MaskService";
-    private static final String CHANNEL_ID = "VPNChannel";
-    private static final int NOTIFICATION_ID = 1;
     
     private ParcelFileDescriptor vpnInterface = null;
     private Thread vpnThread = null;
@@ -32,11 +25,9 @@ public class MaskService extends VpnService {
             if ("START_VPN".equals(action)) {
                 showToast("Starting VPN..."); // Show message on screen
                 startVpn();
-                showNotification("VPN Active", "Your VPN connection is active.");
             } else if ("STOP_VPN".equals(action)) {
                 showToast("Stopping VPN..."); // Show message on screen
                 stopVpn();
-                stopForeground(true); // Stop the notification when VPN is stopped
             }
         } else {
             Log.e(TAG, "Received null intent.");
@@ -119,35 +110,5 @@ public class MaskService extends VpnService {
     // Helper method to show a toast message
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    // Method to show a persistent notification when VPN is active
-    private void showNotification(String title, String message) {
-        createNotificationChannel();
-
-        Intent notificationIntent = new Intent(this, MainActivity.class); // Update MainActivity with the correct path
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setSmallIcon(R.mipmap.ic_launcher) // Use your app icon
-                .setContentIntent(pendingIntent)
-                .setOngoing(true)
-                .build();
-
-        startForeground(NOTIFICATION_ID, notification);
-    }
-
-    // Method to create the notification channel for Android 8.0 and above
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "VPN Connection", NotificationManager.IMPORTANCE_LOW);
-            channel.setDescription("Shows VPN status");
-            NotificationManager manager = getSystemService(NotificationManager.class);
-            if (manager != null) {
-                manager.createNotificationChannel(channel);
-            }
-        }
     }
 }
