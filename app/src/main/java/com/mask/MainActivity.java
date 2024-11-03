@@ -77,13 +77,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startVpnService() {
-        Intent intent = new Intent(this, MaskService.class);
+        Intent intent = new Intent(this, com.service.MaskService.class);
         intent.setAction("START_VPN"); // Specify action to start VPN
         startService(intent);
     }
 
     private void stopVpnService() {
-        Intent intent = new Intent(this, MaskService.class);
+        Intent intent = new Intent(this, com.service.MaskService.class);
         intent.setAction("STOP_VPN"); // Specify action to stop VPN
         stopService(intent);
     }
