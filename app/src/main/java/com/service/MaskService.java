@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
-import core.MaskCore;
+import com.core.MaskCore;
 
 public class MaskService extends VpnService {
     private static final String TAG = "MaskService";

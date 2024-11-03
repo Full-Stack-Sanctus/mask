@@ -13,9 +13,9 @@ import android.util.Log;
 
 import com.google.android.material.snackbar.Snackbar; // For displaying Snackbar
 
-import service.MaskService; // Import your MaskService
+import com.service.MaskService; // Import your MaskService
 import log.MyLogger; // Import your logger
-import config.IpConfig; // Import your configuration class
+import com.config.IpConfig; // Import your configuration class
 
 public class MainActivity extends AppCompatActivity {
 

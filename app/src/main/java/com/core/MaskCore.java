@@ -9,7 +9,7 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 
-import config.IpConfig; // Import your configuration class
+import com.config.IpConfig; // Import your configuration class
 import log.MyLogger; // Import your logger
 
 public class MaskCore {
