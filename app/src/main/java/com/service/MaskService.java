@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import com.core.MaskCore;
 
-import com.example.mask.R;  // Replace com.example.mask with your actual package name
+import com.mask.R;  // Replace com.example.mask with your actual package name
 
 
 public class MaskService extends VpnService {
