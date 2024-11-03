@@ -1,23 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/serverIpInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Server IP"
+        android:inputType="text"
+        android:layout_margin="16dp" />
+
+    <EditText
+        android:id="@+id/serverPortInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Server Port"
+        android:inputType="number"
+        android:layout_below="@id/serverIpInput"
+        android:layout_margin="16dp" />
 
     <Button
         android:id="@+id/startVpnButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/start_vpn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"/>
+        android:text="Start VPN"
+        android:layout_below="@id/serverPortInput"
+        android:layout_margin="16dp" />
 
     <Button
         android:id="@+id/stopVpnButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/stop_vpn"
+        android:text="Stop VPN"
         android:layout_below="@id/startVpnButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_margin="16dp" />
 
 </RelativeLayout>
