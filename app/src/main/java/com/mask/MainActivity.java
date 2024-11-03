@@ -50,12 +50,15 @@ public class MainActivity extends AppCompatActivity {
             // Start VPN service
             Toast.makeText(MainActivity.this, "Start VPN Button Clicked!", Toast.LENGTH_SHORT).show();
             MyLogger.logInfo("Start button has been clicked!");
+            
             startVpnService();
         });
 
         Button stopVpnButton = findViewById(R.id.stopVpnButton);
         stopVpnButton.setOnClickListener(v -> {
             // Stop VPN service
+            Toast.makeText(MainActivity.this, "Stop VPN Button Clicked!", Toast.LENGTH_SHORT).show();
+            
             stopVpnService();
         });
 

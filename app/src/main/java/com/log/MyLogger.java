@@ -6,35 +6,41 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.logging.Level;
 
-
-
 public class MyLogger {
 
     // Create a Logger instance
     private static final Logger logger = Logger.getLogger(MyLogger.class.getName());
+    private static FileHandler fileHandler;
 
     public static void setupLogger() {
-        try {
-            // Specify the file where logs will be written
-            FileHandler fileHandler = new FileHandler("app/src/main/java/com/log/app.log", true); // true to append to existing log file
-            
-            // Set the format of the logs (you can customize this)
-            SimpleFormatter formatter = new SimpleFormatter();
-            fileHandler.setFormatter(formatter);
-            
-            // Add the handler to the logger
-            logger.addHandler(fileHandler);
-        } catch (IOException e) {
-            logger.severe("Failed to set up logger: " + e.getMessage());
+        if (fileHandler == null) { // Check if handler is already set
+            try {
+                // Specify the file where logs will be written in the source directory
+                fileHandler = new FileHandler("app/src/main/java/com/log/app.log", true); // Append mode set to true
+                
+                // Set the format of the logs (you can customize this)
+                SimpleFormatter formatter = new SimpleFormatter();
+                fileHandler.setFormatter(formatter);
+
+                // Set the logging level for the logger
+                logger.setLevel(Level.ALL);
+
+                // Add the handler to the logger
+                logger.addHandler(fileHandler);
+                
+                logger.info("Logger initialized successfully."); // Log initialization success
+            } catch (IOException e) {
+                logger.severe("Failed to set up logger: " + e.getMessage());
+            }
         }
     }
 
-    // Example of logging an info message
+    // Method for logging informational messages
     public static void logInfo(String message) {
         logger.info(message);
     }
 
-    // Example of logging an error message
+    // Method for logging error messages
     public static void logError(String message) {
         logger.severe(message);
     }

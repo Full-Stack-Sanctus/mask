@@ -4,9 +4,10 @@ import android.net.VpnService;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
 import android.content.Intent;
+import android.widget.Toast;
+import android.content.Context; // Import Context
 
 import java.io.IOException;
-
 
 import core.MaskCore; // Import MaskCore
 
@@ -43,12 +44,13 @@ public class MaskService extends VpnService {
         try {
             vpnInterface = builder.establish();
         } catch (Exception e) {
-            broadcastError("Failed to establish VPN interface: " + e.getMessage()); 
+            broadcastError("Failed to establish VPN interface: " + e.getMessage());
             return;
         }
 
         if (vpnInterface == null) {
             Log.e("MaskService", "VPN interface is null. Cannot start VPN thread.");
+            showToast("VPN interface is null. Cannot start VPN thread.");
             return;
         }
 
@@ -58,6 +60,7 @@ public class MaskService extends VpnService {
         vpnThread = new Thread(() -> {
             try {
                 if (maskCore.connectToServer()) {
+                    showToast("VPN started successfully.");
                     maskCore.handleTraffic();  // Start handling traffic
                 } else {
                     broadcastError("Failed to connect to VPN server.");
@@ -78,13 +81,21 @@ public class MaskService extends VpnService {
         try {
             if (maskCore != null) {
                 maskCore.disconnect();  // Disconnect the VPN
+                showToast("VPN disconnected successfully.");
             }
         } catch (IOException e) {
             broadcastError("Error closing VPN: " + e.getMessage());
         }
 
         Log.i("MaskService", "VPN stopped");
+        showToast("VPN stopped.");
         broadcastStatus("VPN Stopped");
+    }
+
+    // Method to show a Toast
+    private void showToast(String message) {
+        // Show a Toast message
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     // Broadcast methods (unchanged)
@@ -100,7 +111,6 @@ public class MaskService extends VpnService {
         errorIntent.setPackage(getPackageName());
         errorIntent.putExtra("error_message", errorMessage);
         sendBroadcast(errorIntent);
+        showToast("Error: " + errorMessage); // Show error toast
     }
 }
-
-// Acts as the bridge between the Android Service and the core VPN logic handled by MaskCore
